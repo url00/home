@@ -1,0 +1,80 @@
+""""""""""""""""""""""""""""""""""""
+" PLUGIN LOADING AND CONFIGURATION "
+""""""""""""""""""""""""""""""""""""
+call plug#begin('~/vimfiles/plugged')
+
+" Another colorscheme option.
+Plug 'pbrisbin/vim-colors-off'
+
+" Add support for .ps1 files.
+Plug 'PProvost/vim-ps1'
+
+" Adds many colorschemes.
+Plug 'flazz/vim-colorschemes'
+
+" Fast file search.
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+
+" Adds toggle quickfix mapping.
+Plug 'milkypostman/vim-togglelist'
+
+" Adds much faster vimgrep.
+Plug 'mileszs/ack.vim'
+" rg support.
+if executable('rg')
+  let g:ackprg = 'rg --vimgrep --no-heading'
+endif
+
+" Sane quickfix window replacement.
+Plug 'yssl/QFEnter'
+
+" Character-wise diff.
+Plug 'rickhowe/diffchar.vim'
+
+" Flie-tree view.
+Plug 'scrooloose/nerdtree'
+let NERDTreeQuitOnOpen=1
+"let NERDTreeQuitOnOpen=0
+"let g:NERDTreeNodeDelimiter = "\u00a0"
+
+" Let % match tags.
+Plug 'adelarsq/vim-matchit'
+
+" Add syntax support for typescript.
+Plug 'leafgarland/typescript-vim'
+
+Plug 'vim-scripts/vim-auto-save'
+let g:auto_save = 0
+
+" More text objects.
+Plug 'wellle/targets.vim'
+
+" Create own text objects.
+Plug 'kana/vim-textobj-user'
+
+" HTML text objects.
+Plug 'whatyouhide/vim-textobj-xmlattr'
+
+" Support camel case motion.
+"Plug 'chaoren/vim-wordmotion'
+
+" Add comment operator.
+Plug 'tpope/vim-commentary'
+
+" Add surround operator.
+Plug 'tpope/vim-surround'
+
+Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts=0
+let g:airline_section_y='%{getcwd()}'
+
+" Colorscheme.
+Plug 'morhetz/gruvbox'
+let g:gruvbox_contrast_light='hard'
+
+" Project-wide find and replace.
+Plug 'brooth/far.vim'
+
+call plug#end()

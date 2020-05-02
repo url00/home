@@ -1,0 +1,80 @@
+" Function to rename the variable under the cursor.
+function! Rnvar()
+    set noignorecase
+    let word_to_replace = expand("<cword>")
+    let replacement = input("New name: ")
+    execute '%s/\v<' . word_to_replace . '>/' . replacement . '/gc'
+    set ignorecase
+endfunction
+
+function! Todo_Done()
+    let line=getline('.')
+    if line =~ "\[ \]"
+        execute "normal! ^t]rx\<esc>dd}kp\<c-o>"
+    endif
+endfunction
+
+
+function! Notes_MakeHeader()
+    let padding_length = 8
+    let padding = repeat(" ", padding_length)
+    let header = toupper(input("Header: "))
+    
+    let top_length = padding_length + len(header) + padding_length
+    let top = printf("   %s", repeat("_", top_length))
+    
+    let rest_of_line_length = 80 - top_length - 4
+    let rest_of_line = repeat("_", rest_of_line_length)
+    
+    let line = printf("__|%s%s%s|%s", padding, header, padding, rest_of_line)
+    put ="\n"
+    put =top
+    put =line
+    execute "normal! jj"
+endfunction
+
+function! FixCursor()
+    set guicursor=
+    set guicursor+=n-c:ver25-Cursor-blinkon100-blinkoff100,
+    set guicursor+=v-ve:block-blinkon0,
+    set guicursor+=o:hor50-Cursor,
+    set guicursor+=i-ci:ver25-Cursor/lCursor,
+    set guicursor+=r-cr:hor20-Cursor/lCursor,
+    set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
+endfunction
+
+function! FindDef()
+    let search = "(public|private|function)[\\s\\w<>]*" . expand("<cword>")
+    let command = "Ack! \"" . search . "\""
+    " echom command
+    execute command
+endfunction
+
+function! ListProjects()
+    source ~\_vimrc_transient
+    let s:vimrcText = readfile(glob('~/_vimrc_transient'))
+    for s:line in s:vimrcText
+        let s:projectMap = matchstr(s:line, 'leader>\d\+.\{-}cd')
+        if empty(s:projectMap)
+        else
+            echo s:line
+        endif
+    endfor
+endfunction
+
+function! EditPathLike()
+    let line = getline('.')
+    let pathToSource = matchlist(line, 'source \(.\+\)')[1]
+    exec ":e " pathToSource
+endfunction
+
+function! GrepQuickFix(pat)
+  let all = getqflist()
+  for d in all
+    if bufname(d['bufnr']) !~ a:pat && d['text'] !~ a:pat
+        call remove(all, index(all,d))
+    endif
+  endfor
+  call setqflist(all)
+endfunction
+command! -nargs=* GrepQF call GrepQuickFix(<q-args>)

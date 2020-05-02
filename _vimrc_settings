@@ -1,0 +1,234 @@
+" Disable auto indent.
+filetype indent off
+
+" Set the default colorscheme.
+"colorscheme ibmedit
+"colorscheme monokai
+"colorscheme adrian
+"colorscheme darkslategray
+colorscheme default
+"colorscheme solarized
+
+" More x-tream options.
+"colorscheme C64
+"colorscheme pink
+"colorscheme cobalt2
+"colorscheme sweetcandy
+"colorscheme matrix
+
+" From plugins.
+"colorscheme gruvbox
+"colorscheme off
+
+" Some colorschemes respect this setting.
+set background=light
+"set background=dark
+
+" Override highlight cursor stuff.
+augroup vimrc
+    autocmd!
+    " For set background=light
+    "autocmd ColorScheme * highlight CursorLine ctermbg=white guibg=white 
+    "autocmd ColorScheme * highlight CursorColumn ctermbg=white guibg=white
+    " For set background=dark
+    "autocmd ColorScheme * highlight CursorLine ctermbg=black guibg=black 
+    "autocmd ColorScheme * highlight CursorColumn ctermbg=black guibg=black
+augroup END
+
+" Control syntax highlighting.
+" (Should come after setting the colorscheme to avoid some possible issues.)
+syntax off
+"syntax on
+
+" Set case search settings.
+set ignorecase
+
+" Set tab settings.
+set tabstop=4
+set shiftwidth=0
+set expandtab
+set smartindent
+
+" When a bracket is inserted, breifly jump to the matching one.
+set showmatch
+" How many tenths of a second to blink between matching brackets.
+set mat=1
+
+" Show search results as they are typed.
+set incsearch
+
+" Control search highlight.
+set hlsearch
+
+" Show current command in the lower left.
+set showcmd
+
+" Hightlight the current line with the cursor.
+set cursorline
+
+" Highlight the current column with the cursor.
+"set cursorcolumn
+
+" Control line numbers.
+set nonumber
+
+" Set how many lines of context to keep around the cursor.
+set scrolloff=0
+"set scrolloff=7
+" Force cursor to center always.
+"set scrolloff=999
+
+" Control line wrapping.
+set wrap linebreak
+" Limits the length of a single line being inserted in insert mode.
+set tw=0
+" Extra padding which causes wrapping to start sooner than the edge of the screen.
+set wrapmargin=0
+" Line wrap character.
+set showbreak=→
+
+" Add lots of undo.
+set history=1000
+set undolevels=1000
+
+" Status line.
+set statusline=
+set statusline+=\ 
+set statusline+=%{getcwd()}
+set statusline+=\ -\ 
+set statusline+=%t
+set statusline+=%=
+set statusline+=%l
+set statusline+=:
+set statusline+=%c
+set statusline+=%.m
+set statusline+=\ 
+set laststatus=2
+"set statusline=%#Normal# 
+"set laststatus=0
+"set nu
+
+" Disable any and all beeping and or flashing.
+set noerrorbells visualbell t_vb=
+
+" Set the folder for swap files.
+set directory=$TEMP
+
+" Hides abandoned buffers instead of unloading them.
+set hid
+
+" Stop the screen from updating during macros, making them much faster.
+set lazyredraw
+
+" If this many millis nothing is typed the swap file will be written to disk.
+set updatetime=4000
+" Disable swap files.
+set noswapfile
+
+" Wait forever for a mapped key squence or keyboard code.
+set notimeout
+set nottimeout
+
+" Disable saving backup files.
+set nobackup
+set nowb
+
+" Vertical diffs please.
+set diffopt+=vertical
+
+" Disable auto split resize on close.
+set noea
+
+" Enable sane fold settings.
+" set foldmethod=indent
+" set foldlevel=0
+" set foldopen=
+" set foldopen+=jump
+" set foldopen+=quickfix
+" set foldopen+=mark
+" set foldopen+=percent
+
+" Make the mouse cursor more precise.
+set mouseshape=n:beam,v:beam
+
+" Automatically reload file changes.
+set autoread
+au CursorHold * checktime
+
+" Automatically save when navigating buffers, or before commands.
+set autowrite
+
+" Enable mouse for (a)ll modes.
+set mouse=a
+
+" Enable fancy/better tab completion.
+set wildmode=longest,list,full
+" Enable smart tab completion in ex.
+set wildmenu
+
+" Allow backspacing over everything.
+set backspace=indent,eol,start
+
+" Keys which move to the next/previous line when at the end of a line.
+set whichwrap=
+set whichwrap+=b,s " Allow backspace and space.
+set whichwrap+=<,>,[,] " In this case, left and right arrow keys in both insert and normal modes.
+
+" Set how many chars of context to keep around cursor horizontally.
+set sidescroll=1
+
+" Hide tabs and EOL chars.
+set nolist
+
+" Set default file encoding.
+set encoding=utf-8
+
+" Enable highlighting for file formats without plugins.
+au BufNewFile,BufRead *.xaml set filetype=xml
+
+" Build completion settings.
+set complete=
+set complete+=.     " Look in current buffer.
+set complete+=w,b,u " Look in buffers from other windows, loaded and unloaded buffers.
+
+" Build viminfo file settings.
+set viminfo=      " Clear any settings.
+set viminfo+='99  " Remember marks for the last 99 open files.
+set viminfo+=%    " Save open buffers.
+set viminfo+=/999 " Remember the last 999 searches.
+set viminfo+=@999 " Save 999 lines of input line history.
+set viminfo+=h    " Disable the effect of hlsearch when loading the viminfo file.
+
+set gdefault
+
+" Platform specific settings.
+if has("win32")
+    augroup global_settings
+        autocmd!
+        autocmd GUIEnter * set visualbell t_vb=
+        autocmd BufEnter * call FixCursor()
+    augroup END
+    set guifont=Consolas:h18:qCLEARTYPE
+else
+    set guifont=Pragmata\ Pro\ 12
+endif
+
+if has("gui_running") 
+    " Set default GUI size.
+    set lines=90
+    set columns=400
+
+    " Disable annoying parts of gvim.
+    " Remove GUI toolbar.
+    set guioptions-=T
+    set guioptions-=t
+    set guioptions-=m
+    " Hide lower scroll bar. (Not needed with word wrap.)
+    set guioptions-=b
+    " Hide side scroll bars.
+    "set guioptions-=r
+    "set guioptions-=l
+    " Show side scroll bars.
+    set guioptions+=r
+    set guioptions+=l
+endif

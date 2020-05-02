@@ -1,0 +1,158 @@
+" Example of buffer specific mapping:
+"augroup notes_only_map
+"    autocmd!
+"    autocmd BufEnter Notes.txt nnoremap <silent> <c-j> :call Todo_Done()<cr>
+"    autocmd BufEnter Notes.txt nnoremap <silent> <c-h> :call Notes_MakeHeader()<cr>
+"augroup END
+"
+"augroup notes_only_unmap
+"    autocmd!
+"    autocmd BufLeave Notes.txt nunmap <silent> <c-j>
+"    autocmd BufLeave Notes.txt nunmap <silent> <c-h>
+"augroup END
+
+" Cover the most common typo.
+" Doesn't work because it remaps all of ex's Ws to w. Can't ever type the W in
+" Wipe for exampe.
+" cmap W w
+" This works because it's a new command entirely.
+command! -bang -range=% -complete=file -nargs=* W <line1>,<line2>write<bang> <args>
+
+
+
+"let g:powershellpath = 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+"nnoremap <expr> <leader>r ':!' . shellescape(fnameescape(g:powershellpath)) . ' ' . shellescape(expand("%:p"))
+"
+" Open file in explorer with file selected.
+nnoremap <expr> <silent><leader>eo ':silent !start explorer.exe /select,' . shellescape(expand("%:p")) . '<cr>'
+nnoremap <leader>en :e ~/Dropbox/Notes.txt<cr>
+
+" Set cwd to current file's dir.
+nnoremap <leader>c :cd %:p:h<cr>
+
+" Clear all buffers.
+nnoremap <silent> <leader>bd :bufdo bd!<cr>
+
+nnoremap <leader>` :call ListProjects()<cr>
+
+" Turn off search highlight.
+nnoremap <silent><leader><space> :nohlsearch<cr>
+
+" Edit vimrc and load vimrc mappings.
+nnoremap <silent> <leader>ev :exec 'e' $MYVIMRC<cr>
+nnoremap <silent> <leader>es :source %:p<cr>
+nnoremap <silent> <leader>ee :call EditPathLike()<cr>
+
+" Search for current word with Ack.
+nnoremap <leader>8 :Ack! "\b<C-R><C-W>\b"<cr>
+
+" Search for current word with Rg.
+nnoremap <leader><m-8> :Rg \b<C-R><C-W>\b<cr>
+
+"Toggle quickfix list. (Plugin defined.)
+"map <leader>q 
+
+" Easy tab management.
+nnoremap <f1> :tabp<cr>
+nnoremap <f2> :tabnew<cr>
+nnoremap <f3> :tabn<cr>
+nnoremap <f12> :call FindDef()<cr>
+
+nnoremap <c-e> :call Rnvar()<cr>
+
+" Select pasted text.
+"nnoremap <expr> gv '`[' . getregtype()[0] . '`]'
+
+" Highlight word under cursor.
+nnoremap * *Nzz
+
+" Tab to indent in visual mode.
+vnoremap <tab> >gv
+vnoremap <s-tab> <gv
+nnoremap <tab> a<c-t><esc>
+nnoremap <s-tab> a<c-d><esc>
+inoremap <tab> <c-t>
+inoremap <s-tab> <c-d>
+
+" Sane previous/next tab maps.
+nnoremap <silent>T :tabp<cr>
+nnoremap <silent>Y :tabn<cr>
+
+" Sane j/k with wrapping.
+nnoremap j gj
+vnoremap j gj
+nnoremap k gk
+vnoremap k gk
+
+" Highlight last inserted (put/pasted) text.
+nnoremap gV `[v`]
+
+" Make window close mapping sane.
+nnoremap <c-w>x <c-w>c
+
+" Easy close window/buffer.
+nnoremap <silent> <m-W> <c-w>c
+
+" Small split.
+nnoremap <silent> <m-w> :sp<cr><c-w>j<c-w>_<c-w>kzt5<c-w>+<c-w>j
+
+
+" Quickfix navigation.
+nnoremap <m-n> :cn<cr>
+nnoremap <m-p> :cp<cr>
+
+" Remap navigation to c-t (back) and c-y (forward).
+" Because cntl-i is inrep'ed as a tab, need to override the deafalt.
+nnoremap <c-t> <c-o>
+nnoremap <c-y> <c-i>
+nnoremap <c-o> <nop>
+
+" System cut/copy/paste.
+vnoremap <c-x> "+x
+vnoremap <c-c> "+y
+noremap <c-v> "+gp
+cnoremap <c-v> <c-r>+
+exe 'inoremap <script> <c-v> <c-g>u' . paste#paste_cmd['i']
+exe 'vnoremap <script> <c-v> ' . paste#paste_cmd['v']
+
+" Standard save.
+noremap <silent><c-s> :update<cr>
+vnoremap <silent><c-s> <c-c>:update<cr>
+inoremap <silent><c-s> <c-o>:update<cr>
+
+" Standard undo.
+noremap <c-z> u
+inoremap <c-z> <c-o>u
+
+" Standard select all.
+noremap <c-a> gggH<c-o>G
+inoremap <c-a> <c-o>gg<c-o>gH<c-o>G
+cnoremap <c-a> <c-c>gggH<c-o>G
+onoremap <c-a> <c-c>gggH<c-o>G
+noremap <c-a> <c-c>gggH<c-o>G
+
+" Remap the increment commands as they are now partly used
+" by select all.
+nnoremap <a-a> <c-a>
+nnoremap <a-x> <c-x>
+
+" Better visual selection.
+nnoremap <silent><m-4> v$h
+nnoremap <silent><m-6> v^
+
+nnoremap K :Rg  
+nnoremap <c-p> :Files<cr> 
+
+nnoremap <m-K> :Ack! ""<left>
+
+nnoremap <silent><c-n> :NERDTreeFind<cr>
+nnoremap <silent><c-b> :NERDTree<cr>
+
+" Experimental maps.
+nnoremap V v$h
+nnoremap <m-v> V
+vnoremap V v$h
+vnoremap <m-v> V
+
+" VSCode savings.
+nnoremap <c-\> :sp<cr>
