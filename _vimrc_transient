@@ -1,7 +1,0 @@
-" Project directory maps:
-nnoremap <silent> <leader>0 :cd ~\Desktop\<cr>
-nnoremap <silent> <leader>1 :cd ~\Desktop\AWS\InteractServer\<cr>
-nnoremap <silent> <leader>2 :cd ~\Desktop\AWS\InteractServer\InteractServer\app\src\<cr>
-nnoremap <silent> <leader>3 :cd ~\Desktop\AWS\Interact\interact-7\<cr>
-nnoremap <silent> <leader>4 :cd ~\Desktop\AWS\InteractApp\<cr>
-nnoremap <silent> <leader>5 :cd ~\Desktop\Thing\<cr>
