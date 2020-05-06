@@ -56,12 +56,6 @@ Plug 'yssl/QFEnter'
 " Character-wise diff.
 Plug 'rickhowe/diffchar.vim'
 
-" Flie-tree view.
-Plug 'scrooloose/nerdtree'
-let NERDTreeQuitOnOpen=1
-"let NERDTreeQuitOnOpen=0
-"let g:NERDTreeNodeDelimiter = "\u00a0"
-
 " Let % match tags.
 Plug 'adelarsq/vim-matchit'
 
@@ -108,6 +102,12 @@ filetype plugin on
 
 
 "--functions
+" Function to open netrw in the cwd.
+function! Netrw_OpenCwd()
+    let cwd=getcwd()
+    execute 'Vex ' . cwd
+endfunction
+
 " Function to rename the variable under the cursor.
 function! Rnvar()
     set noignorecase
@@ -189,6 +189,14 @@ endfunction
 command! -nargs=* GrepQF call GrepQuickFix(<q-args>)
 
 "--settings
+" Netrw.
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_keepdir = 0
+
 " Disable auto indent.
 filetype indent off
 
@@ -235,7 +243,7 @@ syntax off
 set ignorecase
 
 " Set tab settings.
-set tabstop=4
+set tabstop=2
 set shiftwidth=0
 set expandtab
 set smartindent
@@ -399,7 +407,7 @@ if has("win32")
         autocmd GUIEnter * set visualbell t_vb=
         autocmd BufEnter * call FixCursor()
     augroup END
-    set guifont=Consolas:h18:qCLEARTYPE
+    set guifont=Consolas:h12:qCLEARTYPE
 else
     set guifont=Pragmata\ Pro\ 12
 endif
@@ -571,8 +579,8 @@ nnoremap <c-p> :Files<cr>
 
 nnoremap <m-K> :Ack! ""<left>
 
-nnoremap <silent><c-n> :NERDTreeFind<cr>
-nnoremap <silent><c-b> :NERDTree<cr>
+nnoremap <silent><c-b> :call Netrw_OpenCwd()<cr>
+nnoremap <silent><c-n> :Vex<cr>
 
 " Experimental maps.
 nnoremap V v$h
@@ -587,6 +595,6 @@ nnoremap <c-\> :sp<cr>
 nnoremap <silent> <leader>0 :cd ~\Desktop\<cr>
 nnoremap <silent> <leader>1 :cd ~\Desktop\AWS\InteractServer\<cr>
 nnoremap <silent> <leader>2 :cd ~\Desktop\AWS\InteractServer\InteractServer\app\src\<cr>
-nnoremap <silent> <leader>3 :cd ~\Desktop\AWS\Interact\interact-7\<cr>
+nnoremap <silent> <leader>3 :cd ~\Desktop\AWS\Identity\<cr>
 nnoremap <silent> <leader>4 :cd ~\Desktop\AWS\InteractApp\<cr>
 nnoremap <silent> <leader>5 :cd ~\Desktop\Thing\<cr>
